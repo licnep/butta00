@@ -51,9 +51,9 @@ If the shared folder doesn't mount automatically open a terminal (`Ctrl+alt+T`) 
 Keyboard layout
 ---------------
 
-If you are not able to enter certain characters you may need to change the keyboard layout on the top right corner
+If you are unable to enter certain characters you may need to change the keyboard layout in the top right corner:
 
 ![Layout](img/layout.png)
 
 
-For any other problem, contact alessandro.preziosi@sumupanalytics.com
+For any other issue, contact alessandro.preziosi@sumupanalytics.com
