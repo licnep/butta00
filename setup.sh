@@ -23,17 +23,34 @@ recho() {
     echo "$(tput setaf 1)$1$(tput sgr 0)"
 }
 
-#JDK: (version 8 needed by Tika)
-if ! grep -q "webupd8" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
-    sudo add-apt-repository ppa:webupd8team/java -y
-    sudo apt-get update
-fi
-if ! sudo apt-get install oracle-java8-installer oracle-java8-set-default -y
+#JDK:
+if ! sudo apt-get install openjdk-7-jdk -y
 then
-    recho "ERROR: jdk 8 installation failed. Aborting."
+    recho "ERROR: jdk installation failed. Aborting."
     exit 1
 fi
 
+#if ! grep -q "webupd8" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
+#    sudo add-apt-repository ppa:webupd8team/java -y
+#    sudo apt-get update
+#fi
+#if ! sudo apt-get install oracle-java8-installer -y
+#then
+#    recho "ERROR: jdk 8 installation failed. Aborting."
+#    exit 1
+#fi
+#if ! sudo apt-get install oracle-java8-set-default -y
+#then
+#    recho "ERROR: jdk 8 installation failed. Aborting."
+#    exit 1
+#fi
+
+if ! grep 'JAVA_HOME' ~/.bashrc
+then
+    gecho "setting JAVA_HOME"
+    echo "export JAVA_HOME=\"/usr/lib/jvm/java-7-openjdk-amd64\"" >> ~/.bashrc
+fi
+export JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
 
 #Anaconda:
 if [[ `which python` != *"anaconda"* ]]
@@ -84,7 +101,7 @@ fi
 if ! python -c "import jnius"
 then
     gecho "==== Installing pyjnius ===="
-    pip install jnius
+    pip install git+git://github.com/kivy/pyjnius.git
 else
     gecho "pyjnius already installed."
 fi
@@ -100,4 +117,5 @@ then
 fi
 
 gecho "INSTALLATION SUCCESSFUL!"
+
 
