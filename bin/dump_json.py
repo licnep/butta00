@@ -47,12 +47,16 @@ def dump_metadata(meta):
 def json_from_tika(meta,txt,filename,pathname):
     ''' generate a document object that can be dumped with
     json.dumps() and then sent to anseri for analysis'''
+
+    created = meta.get('created') or meta.get('dcterms:created') or meta.get('Creation-Date') or meta.get('dcterms:modified') or meta.get('Last-Modified')
+    author = meta.get('Author') or meta.get('meta:author') or meta.get('dc:creator') or meta.get('creator')  
+
     document = {
         'filename':os.path.splitext(filename)[0],
         'fullpath':pathname,
         'title':meta.get('title').decode('utf-8') if (meta.get('title') is not None) else None,
-        'created':meta.get('created'),
-        'author':meta.get('Author'),
+        'created':created,
+        'author':author,
         'text':txt.decode('utf-8'), #use [:20] to truncate for testing
         'checksum': hashlib.md5(pathname.encode('utf-8')).hexdigest(),
         'acquired_on': strftime("%d %b %Y %X +0000", gmtime())
