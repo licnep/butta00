@@ -18,6 +18,23 @@ gecho() {
     echo "$(tput setaf 2)$1$(tput sgr 0)"
 }
 
+recho() {
+    #echo in red color
+    echo "$(tput setaf 1)$1$(tput sgr 0)"
+}
+
+#JDK: (version 8 needed by Tika)
+if ! grep -q "webupd8" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
+    sudo add-apt-repository ppa:webupd8team/java -y
+    sudo apt-get update
+fi
+if ! sudo apt-get install oracle-java8-installer oracle-java8-set-default -y
+then
+    recho "ERROR: jdk 8 installation failed. Aborting."
+    exit 1
+fi
+
+
 #Anaconda:
 if [[ `which python` != *"anaconda"* ]]
 then
@@ -63,10 +80,7 @@ else
     gecho "AI_js already installed."
 fi
 
-#JDK:
-sudo apt-get install -y openjdk-7-jdk
-
-#Jnius
+#PyJnius
 if ! python -c "import jnius"
 then
     gecho "==== Installing pyjnius ===="
@@ -75,13 +89,15 @@ else
     gecho "pyjnius already installed."
 fi
 
+#chmod
+chmod a+x ./bin/dump_json.py
+
 #add to path
 if ! grep 'butta' ~/.bashrc
 then
     gecho "adding ./bin to .bashrc"
     echo "export PATH=\"`pwd`/bin:$PATH\"" >> ~/.bashrc
 fi
-export PATH="`pwd`/bin:$PATH"
 
 gecho "INSTALLATION SUCCESSFUL!"
 
