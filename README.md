@@ -55,5 +55,13 @@ If you are unable to enter certain characters you may need to change the keyboar
 
 ![Layout](img/layout.png)
 
+"Cannot register the hard disk"
+-------------------------------
+
+This happens when a virtual machine is already using a .vdi image with the same UUID. To change the image UUID run:
+
+`VBoxManage internalcommands setvdiuuid disk.vdi`
+
+Where disk.vdi is the name of the vdi you want to use.
 
 For any other issue, contact alessandro.preziosi@sumupanalytics.com
