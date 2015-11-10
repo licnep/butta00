@@ -60,7 +60,7 @@ If you are unable to enter certain characters you may need to change the keyboar
 
 This happens when a virtual machine is already using a .vdi image with the same UUID. To change the image UUID run:
 
-`VBoxManage internalcommands setvdiuuid disk.vdi`
+`VBoxManage internalcommands sethduuid disk.vdi`
 
 Where disk.vdi is the name of the vdi you want to use.
 
