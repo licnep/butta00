@@ -62,7 +62,7 @@ then
     gecho "Editing .bashrc"
     if ! grep 'anaconda' ~/.bashrc
     then
-        echo "export PATH=\"$HOME/anaconda2/bin:$PATH\"" >> ~/.bashrc
+        echo "export PATH=\"$HOME/anaconda2/bin:$PATH\" #anacondaPath" >> ~/.bashrc
     fi
     export PATH="$HOME/anaconda2/bin:$PATH"
 else
@@ -113,7 +113,7 @@ chmod a+x ./bin/dump_json.py
 if ! grep 'butta' ~/.bashrc
 then
     gecho "adding ./bin to .bashrc"
-    echo "export PATH=\"`pwd`/bin:$PATH\"" >> ~/.bashrc
+    echo "export PATH=\"`pwd`/bin:$PATH\" #buttaPath" >> ~/.bashrc
 fi
 
 gecho "INSTALLATION SUCCESSFUL!"

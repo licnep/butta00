@@ -8,8 +8,6 @@ import hashlib
 from time import gmtime, strftime
 import json
 
-print(os.path.dirname(os.path.abspath(__file__)) + "/tika-app-1.10.jar")
-
 os.environ['CLASSPATH'] = os.path.dirname(os.path.abspath(__file__)) + "/tika-app-1.10.jar"
 
 from jnius import autoclass
@@ -38,11 +36,11 @@ def dump_text(pathname):
 
 def dump_metadata(meta):
     ''' output the metadata returned by Tika on screen '''
-    print('==================== METADATA: ====================')
+    print_green('==================== METADATA: ====================')
     metadataNames = meta.names();
     for name in metadataNames:		        
          print(name + ": " + meta.get(name));
-    print('===================================================')
+    print_green('===================================================')
 
 def json_from_tika(meta,txt,filename,pathname):
     ''' generate a document object that can be dumped with
@@ -85,6 +83,8 @@ def walktree(top):
         else:
             print('Skipping %s' % pathname)
 
+def print_green(txt):
+    print('\033[92m'+txt+'\033[0m')
 
 if __name__ == '__main__':
     if (len(sys.argv)!=2):
@@ -96,4 +96,5 @@ if __name__ == '__main__':
     output = json.dumps(documents, ensure_ascii=False, sort_keys=True, indent=4, separators=(',', ': '))
     with open('./output.json', 'w') as fd:
         fd.write(output.encode('utf-8'))
+        print_green("Output written to: "+os.path.abspath('./output.json'))
 
