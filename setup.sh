@@ -23,6 +23,14 @@ recho() {
     echo "$(tput setaf 1)$1$(tput sgr 0)"
 }
 
+#move to the directory containing the script if it was launched elsewhere
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+
+if confirm "Download (pull) the latest version now?" 
+then
+    git pull
+fi
+
 #JDK:
 if ! sudo apt-get install openjdk-7-jdk -y
 then
@@ -45,10 +53,10 @@ fi
 #    exit 1
 #fi
 
-if ! grep 'JAVA_HOME' ~/.bashrc
+if ! grep '#javaHome' ~/.bashrc
 then
     gecho "setting JAVA_HOME"
-    echo "export JAVA_HOME=\"/usr/lib/jvm/java-7-openjdk-amd64\"" >> ~/.bashrc
+    echo "export JAVA_HOME=\"/usr/lib/jvm/java-7-openjdk-amd64\" #javaHome" >> ~/.bashrc
 fi
 export JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
 
@@ -56,11 +64,11 @@ export JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
 if [[ `which python` != *"anaconda"* ]]
 then
     gecho "==== Downloading Anaconda ===="
-    #wget -c https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Linux-x86_64.sh #-c to continue download if it was interrupted
+    wget -c https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Linux-x86_64.sh #-c to continue download if it was interrupted
     gecho "==== Installing Anaconda ===="
     bash ./Anaconda2-2.4.0-Linux-x86_64.sh -b #batch mode, automatically accepts license
     gecho "Editing .bashrc"
-    if ! grep 'anaconda' ~/.bashrc
+    if ! grep '#anacondaPath' ~/.bashrc
     then
         echo "export PATH=\"$HOME/anaconda2/bin:$PATH\" #anacondaPath" >> ~/.bashrc
     fi
@@ -107,10 +115,10 @@ else
 fi
 
 #chmod
-chmod a+x ./bin/dump_json.py
+chmod a+x ./bin/dir2json.py
 
 #add to path
-if ! grep 'butta' ~/.bashrc
+if ! grep '#buttaPath' ~/.bashrc
 then
     gecho "adding ./bin to .bashrc"
     echo "export PATH=\"`pwd`/bin:$PATH\" #buttaPath" >> ~/.bashrc

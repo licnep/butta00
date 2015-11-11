@@ -29,7 +29,7 @@ On the desktop you will find a folder named `share`, if the setup worked the fol
 
 Open a terminal using `ctrl+alt+T`.
 
-Run the command: `dump_json.py ~/Desktop/share/`
+Run the command: `dir2json.py ~/Desktop/share/`
 
 (Replace `~/Desktop/share/` with another folder if needed)
 
